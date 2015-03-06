@@ -11,6 +11,7 @@ ini_set('date.timezone','Asia/Tokyo');
 $NOW = (new DateTime('now'))->format('Y/m/d H:i:s');
 
 
+echo 'header';
 echo '<pre>';
 var_dump(getallheaders());
 echo '</pre>';
