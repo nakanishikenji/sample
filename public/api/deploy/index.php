@@ -1,16 +1,26 @@
 <?php
-$LOG_FILE = __DIR__.'/hook.log';
-echo "start\n<pre>";
-var_dump($_POST);
-if (isset($_POST['payload']) ) {
-    $payload = json_decode($_POST['payload'], true);
-    if ($_POST['payload'] === 'refs/heads/develop') {
-        echo "execute : \n";
-        exec(`cd /var/www/lamp/sample; git pull origin develop:local 2>&1`, $array);
-        var_dump($array);
-        file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." ".$_SERVER['REMOTE_ADDR']." git pulled: ".$payload['head_commit']['message']."\n", FILE_APPEND|LOCK_EX);
+$LOG_FILE = dirname(dirname(dirname(__DIR__))).'/hook.log';
+define('PAYLOAD', 'payload');
+define('PAYLOAD_REF', 'ref');
+define('REF', 'refs/heads/develop');
+
+define('PROJECT_ROOT', '/var/www/lamp/sample');
+define('COMMAND', 'cd ' . PROJECT_ROOT . '; git pull origin develop:local;');
+
+ini_set('date.timezone','Asia/Tokyo');
+$NOW = (new DateTime('now'))->format('Y/m/d H:i:s');
+
+
+echo '<pre>';
+var_dump(getallheaders());
+echo '</pre>';
+
+if (isset($_POST[PAYLOAD])) {
+    $payload = json_decode($_POST[PAYLOAD], true);
+    if ($payload[PAYLOAD_REF] === REF) {
+        exec(COMMAND);
+        file_put_contents($LOG_FILE, $NOW." ".$_SERVER['REMOTE_ADDR']." git pulled: ".$payload['head_commit']['message']."\n", FILE_APPEND|LOCK_EX);
     }
 } else {
-    file_put_contents($LOG_FILE, date("[Y-m-d H:i:s]")." invalid access: ".$_SERVER['REMOTE_ADDR']."\n", FILE_APPEND|LOCK_EX);
+    file_put_contents($LOG_FILE, $NOW." invalid access: ".$_SERVER['REMOTE_ADDR']."\n", FILE_APPEND|LOCK_EX);
 }
-echo "</pre>end\n";
