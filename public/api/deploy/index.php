@@ -20,7 +20,7 @@ $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $access_key = getallheaders()[ACCESSKEY];
 $postdata = file_get_contents("php://input");
 
-echo '15';
+echo '16';
 echo 'hash' . "\n";
 echo hash_hmac(ALG, $postdata,SECRETKEY);
 
