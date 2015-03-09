@@ -25,7 +25,13 @@ echo '<pre>';
 var_dump($_POST);
 echo '</pre>';
 
-echo '02';
+
+echo "php://input\n";
+echo '<pre>';
+var_dump($postdata);
+echo '</pre>';
+
+echo '03';
 echo 'hash' . "\n";
 echo hash_hmac(ALG, $postdata,SECRETKEY);
 
