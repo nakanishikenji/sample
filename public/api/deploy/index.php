@@ -31,7 +31,7 @@ echo '<pre>';
 var_dump($postdata);
 echo '</pre>';
 
-echo '04';
+echo '05';
 echo 'hash' . "\n";
 echo hash_hmac(ALG, $postdata,SECRETKEY);
 
