@@ -8,7 +8,7 @@ define('ALG', 'sha1');
 
 // editable
 define('SECRETKEY', 'framelunchssucproject');
-define('PROJECT_ROOT', '/var/www/lamp/ssuc');
+define('PROJECT_ROOT', '/var/www/lamp/sample');
 define('COMMAND', 'cd ' . PROJECT_ROOT . '; git pull origin develop:local;');
 
 // log content
