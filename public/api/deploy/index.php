@@ -25,7 +25,7 @@ echo '<pre>';
 var_dump($_POST);
 echo '</pre>';
 
-echo '01';
+echo '02';
 echo 'hash' . "\n";
 echo hash_hmac(ALG, $postdata,SECRETKEY);
 
