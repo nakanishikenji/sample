@@ -20,27 +20,12 @@ $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
 $access_key = getallheaders()[ACCESSKEY];
 $postdata = file_get_contents("php://input");
 
-echo '16';
-echo 'hash' . "\n";
-echo hash_hmac(ALG, $postdata,SECRETKEY);
-
-if (isset($_POST[PAYLOAD])) {
+if (isset($_POST[PAYLOAD]) && $access_key == hash_hmac(ALG, $postdata,SECRETKEY)) {
     $payload = json_decode($_POST[PAYLOAD], true);
     if ($payload[PAYLOAD_REF] === REF) {
         $output=array();
         $ret=null;
         exec(COMMAND, $output, $ret);
-
-        echo "\nOUTPUT\n";
-        echo '<pre>';
-        var_dump($output);
-        echo '</pre>';
-
-        echo "\nRETURN\n";
-        echo '<pre>';
-        var_dump($ret);
-        echo '</pre>';
-
         file_put_contents($LOG_FILE, $NOW.' '.$REMOTE_ADDR." git pulled: ".$payload['head_commit']['message']."\n", FILE_APPEND|LOCK_EX);
     }
 } else {
