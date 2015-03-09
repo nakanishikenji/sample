@@ -31,9 +31,14 @@ if (isset($_POST[PAYLOAD])) {
         $ret=null;
         exec(COMMAND, $output, $ret);
 
-        echo "OUTPUT\n";
+        echo "\nOUTPUT\n";
         echo '<pre>';
         var_dump($output);
+        echo '</pre>';
+
+        echo "\nRETURN\n";
+        echo '<pre>';
+        var_dump($ret);
         echo '</pre>';
 
         file_put_contents($LOG_FILE, $NOW.' '.$REMOTE_ADDR." git pulled: ".$payload['head_commit']['message']."\n", FILE_APPEND|LOCK_EX);
